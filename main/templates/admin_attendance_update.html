@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>참석 내역 수정 - 관리자</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .attendance-update-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        label {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input[type="text"],
+        select {
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="attendance-update-container">
+        <h1>참석 내역 수정</h1>
+        <form method="post" action="{% url 'admin_attendance_update' attendance_id=attendance.id %}">
+            {% csrf_token %}
+            <label for="student_id">교번:</label>
+            <input type="text" id="student_id" name="student_id" value="{{ attendance.student.student_id }}" readonly>
+
+            <label for="student_name">성명:</label>
+            <input type="text" id="student_name" name="student_name" value="{{ attendance.student.name }}" readonly>
+
+            <label for="reservation_status">예약 상태:</label>
+            <select id="reservation_status" name="reservation_status" required>
+                <option value="예약" {% if attendance.reservation_status == '예약' %}selected{% endif %}>예약</option>
+                <option value="취소" {% if attendance.reservation_status == '취소' %}selected{% endif %}>취소</option>
+            </select>
+
+            <label for="attendance_status">참석 여부:</label>
+            <select id="attendance_status" name="attendance_status" required>
+                <option value="참석" {% if attendance.attendance_status == '참석' %}selected{% endif %}>참석</option>
+                <option value="불참" {% if attendance.attendance_status == '불참' %}selected{% endif %}>불참</option>
+            </select>
+
+            <label for="note">비고:</label>
+            <input type="text" id="note" name="note" value="{{ attendance.note }}">
+
+            <input type="submit" value="업데이트">
+        </form>
+        <a href="{% url 'admin_event_detail' event_id=attendance.event.id %}" class="back-link">행사 상세로 돌아가기</a>
+    </div>
+</body>
+</html>
