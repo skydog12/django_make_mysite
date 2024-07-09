@@ -1,0 +1,38 @@
+<!-- templates/student_reservation.html -->
+{% extends 'base.html' %}
+
+{% block title %}예약 - 종교행사 관리 시스템{% endblock %}
+
+{% block content %}
+    <h1>행사 예약</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>날짜</th>
+                <th>종교</th>
+                <th>상태</th>
+                <th>예약</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.date }}</td>
+                    <td>{{ event.get_religion_display }}</td>
+                    <td>{{ event.get_status_display }}</td>
+                    <td>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="event_id" value="{{ event.event_id }}">
+                            <button type="submit">예약</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">예약 가능한 행사가 없습니다.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

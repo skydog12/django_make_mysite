@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}학생 로그인 - 종교행사 관리 시스템{% endblock %}
+
+{% block content %}
+    <h2>학생 로그인</h2>
+    <form method="post" class="login-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-submit">로그인</button>
+    </form>
+    <p>계정이 없으신가요? <a href="{% url 'student_register' %}">학생 가입</a></p>
+    <p>관리자이신가요? <a href="{% url 'admin_login' %}">관리자 로그인</a> 또는 <a href="{% url 'admin_register' %}">관리자 가입</a></p>
+{% endblock %}

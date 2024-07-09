@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}관리자 대시보드 - 종교행사 관리 시스템{% endblock %}
+
+{% block content %}
+    <h2>관리자 대시보드</h2>
+    <nav class="admin-nav">
+        <ul>
+            <li><a href="{% url 'admin_events' %}">종교 행사 관리</a></li>
+            <li><a href="{% url 'admin_student_activities' %}">학생 활동 내역</a></li>
+        </ul>
+    </nav>
+{% endblock %}
