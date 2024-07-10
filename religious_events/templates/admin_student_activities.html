@@ -1,0 +1,30 @@
+<!-- admin_student_activities.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>학생 활동 내역</h2>
+<table>
+    <thead>
+        <tr>
+            <th>학생 ID</th>
+            <th>학생 이름</th>
+            <th>행사 ID</th>
+            <th>행사 이름</th>
+            <th>예약 상태</th>
+            <th>참석 상태</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for attendance in attendances %}
+        <tr>
+            <td>{{ attendance.student.student_id }}</td>
+            <td>{{ attendance.student.name }}</td>
+            <td>{{ attendance.event.event_id }}</td>
+            <td>{{ attendance.event.religion }} 행사</td>
+            <td>{{ attendance.get_reservation_display }}</td>
+            <td>{{ attendance.get_attendance_display }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
