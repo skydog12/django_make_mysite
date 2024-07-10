@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}참석 정보 수정 - 종교행사 관리 시스템{% endblock %}
+
+{% block content %}
+    <h1>참석 정보 수정</h1>
+    <h2>{{ attendance.student.name }} ({{ attendance.student.student_id }})</h2>
+    <h3>{{ attendance.event.date }} - {{ attendance.event.get_religion_display }}</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">수정</button>
+        <a href="{% url 'admin_event_detail' attendance.event.event_id %}" class="button">취소</a>
+    </form>
+{% endblock %}

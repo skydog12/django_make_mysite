@@ -1,0 +1,49 @@
+<!-- templates/admin_events.html -->
+{% extends 'base.html' %}
+
+{% block title %}행사 관리 - 종교행사 관리 시스템{% endblock %}
+
+{% block content %}
+    <h1>행사 관리</h1>
+    <h2>새 행사 등록</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">등록</button>
+    </form>
+
+    <h2>행사 목록</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>행사 ID</th>
+                <th>날짜</th>
+                <th>종교</th>
+                <th>상태</th>
+                <th>예약 인원</th>
+                <th>참석 인원</th>
+                <th>관리</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.event_id }}</td>
+                    <td>{{ event.date }}</td>
+                    <td>{{ event.get_religion_display }}</td>
+                    <td>{{ event.get_status_display }}</td>
+                    <td>{{ event.reserved_count }}</td>
+                    <td>{{ event.attended_count }}</td>
+                    <td>
+                        <a href="{% url 'admin_event_detail' event.event_id %}">상세</a>
+                        <a href="{% url 'admin_event_delete' event.event_id %}">삭제</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7">등록된 행사가 없습니다.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
