@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}행사 삭제 - 종교행사 관리 시스템{% endblock %}
+
+{% block content %}
+    <h1>행사 삭제</h1>
+    <p>다음 행사를 삭제하시겠습니까?</p>
+    <table>
+        <tr>
+            <th>행사 ID</th>
+            <td>{{ event.event_id }}</td>
+        </tr>
+        <tr>
+            <th>날짜</th>
+            <td>{{ event.date }}</td>
+        </tr>
+        <tr>
+            <th>종교</th>
+            <td>{{ event.get_religion_display }}</td>
+        </tr>
+        <tr>
+            <th>상태</th>
+            <td>{{ event.get_status_display }}</td>
+        </tr>
+    </table>
+    <form method="post">
+        {% csrf_token %}
+        <p>이 작업은 되돌릴 수 없습니다. 정말로 삭제하시겠습니까?</p>
+        <button type="submit" class="danger">삭제</button>
+        <a href="{% url 'admin_events' %}" class="button">취소</a>
+    </form>
+{% endblock %}
