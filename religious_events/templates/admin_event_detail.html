@@ -1,0 +1,43 @@
+<!-- templates/admin_event_detail.html -->
+{% extends 'base.html' %}
+
+{% block title %}행사 상세 - 종교행사 관리 시스템{% endblock %}
+
+{% block content %}
+    <h1>행사 상세</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">수정</button>
+    </form>
+
+    <h2>참석 명단</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>교번</th>
+                <th>성명</th>
+                <th>예약</th>
+                <th>참석</th>
+                <th>관리</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendance in attendances %}
+                <tr>
+                    <td>{{ attendance.student.student_id }}</td>
+                    <td>{{ attendance.student.name }}</td>
+                    <td>{{ attendance.get_reservation_display }}</td>
+                    <td>{{ attendance.get_attendance_display }}</td>
+                    <td>
+                        <a href="{% url 'admin_attendance_update' attendance.id %}">수정</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">참석자가 없습니다.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
